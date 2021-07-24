@@ -19,6 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddTaskPopup" android:theme="@style/Theme.Transparent">
+        </activity>
     </application>
 
 </manifest>
