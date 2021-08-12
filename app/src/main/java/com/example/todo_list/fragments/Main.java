@@ -30,6 +30,7 @@ public class Main extends Fragment {
     public Main(Context mcontext) {
         // Required empty public constructor
         test.add(123);
+        test.add(1223);
         arrayList.add(new Main_Data("test",1,"Task",test,test,false,false));
         this.mcontext = mcontext;
     }

@@ -45,7 +45,7 @@ public class ListAdapter_Programming extends ArrayAdapter<Data_Programming>  {
         projekt_title.setText(getItem(position).getProjectname());
         task.setText(getItem(position).getTask());
         deadline_date.setText(Integer.toString(getItem(position).getDeadline().get(0)));
-        //deadline_time.setText(getItem(position).getDeadline().get(0));
+        deadline_time.setText(Integer.toString(getItem(position).getDeadline().get(1)));
         today.setChecked(getItem(position).isToday());
 
 

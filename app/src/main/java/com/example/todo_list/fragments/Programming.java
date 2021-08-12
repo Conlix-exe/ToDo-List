@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -15,7 +16,10 @@ import com.example.todo_list.R;
 import com.example.todo_list.data_types.Data_Programming;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static java.lang.Math.round;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +36,8 @@ public class Programming extends Fragment {
     public Programming(Context mcontext) {
         // Sets Context to MainActivity.this
         //mylist.add("Test");
+        test.add(123);
+        test.add(123);
         test.add(123);
         arrayList.add(new Data_Programming("test",1,"Task",test,test,false,false,"Project"));
         this.mcontext = mcontext;
@@ -55,10 +61,23 @@ public class Programming extends Fragment {
     }
 
 
-    public void addtask(int id, String task, List<Integer> deadline, List<Integer> creationtime, String project_name){
+    public void addtask(int id, String task, List<Integer> deadline, String project_name){
+
         String type = "programming";
         boolean today = false;
         boolean checked = false;
+
+        Date date = new Date();
+
+        List<Integer> creationtime = new ArrayList<>();
+        //List<Integer> creationday = new ArrayList<>();
+        creationtime.add(date.getDay());
+        creationtime.add(round(date.getTime()));
         Data_Programming newtask = new Data_Programming(type,id,task,deadline,creationtime,today,checked,project_name);
+        arrayList.add(newtask);
+
+
+        Toast.makeText(mcontext,date.getDate()+"", Toast.LENGTH_LONG).show();
+        //arrayList.add(new Data_Programming("test",1,"Task",test,test,false,false,"Project"));
     }
 }

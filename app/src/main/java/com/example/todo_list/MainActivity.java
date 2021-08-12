@@ -1,5 +1,6 @@
 package com.example.todo_list;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -18,12 +19,14 @@ import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    int position;
+    int position,highestID = 0;
     TabLayout tabbar;
     FloatingActionButton addtask;
+    PagerAdapter pagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         addtask = findViewById(R.id.addtask);
         //TabItems...
         final ViewPager viewPager = findViewById(R.id.viewPager);
-        final PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(),this);
+        pagerAdapter = new PagerAdapter(getSupportFragmentManager(),this);
         viewPager.setAdapter(pagerAdapter);
         tabbar.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(2);
@@ -50,10 +53,28 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this,AddTaskPopup.class);
                 intent.putExtra("position",viewPager.getCurrentItem());
                 startActivityForResult(intent,1);
+
             }
         });
 
     }//Implement List Adapter
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1){
+            if(resultCode == RESULT_OK){
+                highestID++;
+                Programming programming = PagerAdapter.getProgramming();
+                List<Integer> time = new ArrayList<>();
+                //time.add(1233);
+                //time.add(1133);
+                time.add(Integer.parseInt(data.getStringExtra("time")));
+                time.add(Integer.parseInt(data.getStringExtra("date")));
+                Toast.makeText(this,data.getStringExtra("date"), Toast.LENGTH_LONG).show();
+                programming.addtask(highestID,data.getStringExtra("task"),time,data.getStringExtra("project_name"));
+            }
+        }
+    }
+    //AddTaskHandler einbinden & Fragments übergeben
 }

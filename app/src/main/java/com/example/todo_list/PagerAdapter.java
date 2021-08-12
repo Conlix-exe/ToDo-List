@@ -15,18 +15,26 @@ import com.example.todo_list.fragments.Shopping;
 
 public class PagerAdapter extends FragmentPagerAdapter {
     Context mcontext;
+
+
+
+    static Programming programming;
+    Home home;
     int curent_position = -1;
     public PagerAdapter(FragmentManager fm, Context mcontext){
         super(fm);
         this.mcontext = mcontext;
+        programming = new Programming(mcontext);
+        home = new Home();
+
     }
     @Override
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new Programming(mcontext);
+                return programming;
             case 1:
-                return new Home();
+                return home;
             case 2:
                 return new Main(mcontext);
             case 3:
@@ -38,7 +46,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
         }
     }
-
+    public static Programming getProgramming() {
+        return programming;
+    }
     @Override
     public int getCount() {
         return 5;

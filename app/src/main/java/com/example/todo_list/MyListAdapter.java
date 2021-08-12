@@ -41,7 +41,9 @@ public class MyListAdapter extends ArrayAdapter<Main_Data> {
 
         task.setText(getItem(position).getTask());
         deadline_date.setText(Integer.toString(getItem(position).getDeadline().get(0)));
-        //deadline_time.setText(getItem(position).getDeadline().get(0));
+        deadline_time.setText(Integer.toString(getItem(position).getDeadline().get(1)));
+
+        //deadline_time.setText(1234+"");
         today.setChecked(getItem(position).isToday());
 
 
