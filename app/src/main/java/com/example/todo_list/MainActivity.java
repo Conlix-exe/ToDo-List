@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabbar;
     FloatingActionButton addtask;
     PagerAdapter pagerAdapter;
+    AddTaskHandler addTaskHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
         tabbar = findViewById(R.id.tabBar);
         TabItem programming = findViewById(R.id.programming);
         addtask = findViewById(R.id.addtask);
+
+        //create AddTaskHandler
+        addTaskHandler = new AddTaskHandler(this);
+
         //TabItems...
         final ViewPager viewPager = findViewById(R.id.viewPager);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager(),this);
@@ -73,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 time.add(Integer.parseInt(data.getStringExtra("date")));
                 Toast.makeText(this,data.getStringExtra("date"), Toast.LENGTH_LONG).show();
                 programming.addtask(highestID,data.getStringExtra("task"),time,data.getStringExtra("project_name"));
+
             }
         }
     }
