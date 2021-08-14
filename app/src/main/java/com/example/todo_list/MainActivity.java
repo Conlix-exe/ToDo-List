@@ -4,22 +4,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.todo_list.fragments.Programming;
+import com.example.todo_list.popups.AddTaskPopup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this,Integer.toString(viewPager.getCurrentItem()),Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(MainActivity.this,AddTaskPopup.class);
+                Intent intent = new Intent(MainActivity.this, AddTaskPopup.class);
                 intent.putExtra("position",viewPager.getCurrentItem());
                 startActivityForResult(intent,1);
 
@@ -71,13 +68,26 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 highestID++;
                 Programming programming = PagerAdapter.getProgramming();
-                List<Integer> time = new ArrayList<>();
+                List<Integer> deadline = new ArrayList<>();
                 //time.add(1233);
                 //time.add(1133);
-                time.add(Integer.parseInt(data.getStringExtra("time")));
-                time.add(Integer.parseInt(data.getStringExtra("date")));
+                String[] time = data.getStringExtra("time").split(":");
+                Log.println(Log.DEBUG,"time", time[0]);
+                deadline.add(Integer.parseInt(time[0]));
+                deadline.add(Integer.parseInt(time[1]));
+
+
+                String[] date = data.getStringExtra("date").split("/");
+                Log.println(Log.DEBUG,"time", date[1]);
+                deadline.add(Integer.parseInt(date[0]));
+                deadline.add(Integer.parseInt(date[1]));
+                deadline.add(Integer.parseInt(date[2]));
+                //deadline.add(Integer.parseInt(data.getStringExtra("date")));
+                //deadline.add(Integer.parseInt(data.getStringExtra("time")));
+
                 Toast.makeText(this,data.getStringExtra("date"), Toast.LENGTH_LONG).show();
-                programming.addtask(highestID,data.getStringExtra("task"),time,data.getStringExtra("project_name"));
+                programming.addtask(highestID,data.getStringExtra("task"),deadline,data.getStringExtra("project_name"));
+                addTaskHandler.add_task(data.getStringExtra("type"),highestID,data.getStringExtra("task"),deadline,data.getStringExtra("project_name"));
 
             }
         }

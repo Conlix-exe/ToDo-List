@@ -15,8 +15,14 @@ import com.example.todo_list.ListAdapters.ListAdapter_Programming;
 import com.example.todo_list.R;
 import com.example.todo_list.data_types.Data_Programming;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static java.lang.Math.round;
@@ -39,7 +45,7 @@ public class Programming extends Fragment {
         test.add(123);
         test.add(123);
         test.add(123);
-        arrayList.add(new Data_Programming("test",1,"Task",test,test,false,false,"Project"));
+        //arrayList.add(new Data_Programming("test",1,"Task",test,test,false,false,"Project"));
         this.mcontext = mcontext;
     }
 
@@ -66,13 +72,18 @@ public class Programming extends Fragment {
         String type = "programming";
         boolean today = false;
         boolean checked = false;
-
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
 
         List<Integer> creationtime = new ArrayList<>();
         //List<Integer> creationday = new ArrayList<>();
-        creationtime.add(date.getDay());
-        creationtime.add(round(date.getTime()));
+
+        Calendar calendar = GregorianCalendar.getInstance();
+
+        System.out.println(dateFormat.format(date));
+        creationtime.add(calendar.get(Calendar.HOUR_OF_DAY));
+        creationtime.add(date.getDate());
+        creationtime.add(date.getMonth()+1);
         Data_Programming newtask = new Data_Programming(type,id,task,deadline,creationtime,today,checked,project_name);
         arrayList.add(newtask);
 

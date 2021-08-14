@@ -40,8 +40,8 @@ public class MyListAdapter extends ArrayAdapter<Main_Data> {
         Switch today = (Switch) convertView.findViewById(R.id.today);
 
         task.setText(getItem(position).getTask());
-        deadline_date.setText(Integer.toString(getItem(position).getDeadline().get(0)));
-        deadline_time.setText(Integer.toString(getItem(position).getDeadline().get(1)));
+        deadline_date.setText(Integer.toString(getItem(position).getCreationtime().get(0)));
+        deadline_time.setText(Integer.toString(getItem(position).getCreationtime().get(1)));
 
         //deadline_time.setText(1234+"");
         today.setChecked(getItem(position).isToday());

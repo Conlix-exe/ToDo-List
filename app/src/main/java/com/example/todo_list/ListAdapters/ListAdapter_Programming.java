@@ -1,6 +1,7 @@
 package com.example.todo_list.ListAdapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.annotation.Nullable;
 import com.example.todo_list.R;
 import com.example.todo_list.data_types.Data_Programming;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListAdapter_Programming extends ArrayAdapter<Data_Programming>  {
@@ -44,8 +46,11 @@ public class ListAdapter_Programming extends ArrayAdapter<Data_Programming>  {
 
         projekt_title.setText(getItem(position).getProjectname());
         task.setText(getItem(position).getTask());
-        deadline_date.setText(Integer.toString(getItem(position).getDeadline().get(0)));
-        deadline_time.setText(Integer.toString(getItem(position).getDeadline().get(1)));
+        deadline_date.setText(getItem(position).getDeadline().get(0)+":"+ getItem(position).getDeadline().get(1));
+        //Log.println(Log.ERROR,"data",Integer.toString(getItem(position).getDeadline().get(1))+Integer.toString(getItem(position).getDeadline().get(2)));
+
+        List<Integer> day = getItem(position).getDeadline();
+        deadline_time.setText(day.get(2)+"."+day.get(3)+"."+day.get(4));
         today.setChecked(getItem(position).isToday());
 
 

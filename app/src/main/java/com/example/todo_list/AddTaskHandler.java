@@ -5,6 +5,8 @@ import android.content.Context;
 import com.example.todo_list.data_types.Data_Programming;
 import com.example.todo_list.data_types.Main_Data;
 
+import java.util.List;
+
 
 public class AddTaskHandler {
     Context main_context;
@@ -26,8 +28,8 @@ public class AddTaskHandler {
         give Task to Specific Fragment
          */
 
-    public void add_task(Data_Programming new_task){
-        Main_Data main_data = new Main_Data(new_task.getType(),new_task.getId(),new_task.getTask(),new_task.getDeadline(),new_task.getCreationtime(),new_task.isToday(),new_task.isChecked());
+    public void add_task(String type,int id, String task, List<Integer> deadline, String project_name){
+        //Main_Data main_data = new Main_Data(type,id,task,deadline,new_task.getCreationtime(),new_task.isToday(),new_task.isChecked());
 
     }
 }
