@@ -34,8 +34,8 @@ public class AddTaskPopup extends Activity {
 
     int position;
 
-    List<Integer> day = new ArrayList<>();
-    List<Integer> time = new ArrayList<>();
+    String creation_time;
+    String creation_date;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_programming);
@@ -56,13 +56,25 @@ public class AddTaskPopup extends Activity {
         abort = findViewById(R.id.abort);
         add = findViewById(R.id.add);
 
+        //Create current time & day
+        final Calendar cal = Calendar.getInstance();
+        final int year = cal.get(Calendar.YEAR);
+        final int month = cal.get(Calendar.MONTH);
+        final int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        final Calendar c = Calendar.getInstance();
+        final int hour = c.get(Calendar.HOUR_OF_DAY);
+        final int minute = c.get(Calendar.MINUTE);
+
+        //Create string of current date & time
+        creation_date = year + "/" + month + "/" + year;
+        creation_time = hour + ":" + minute;
+
         date_input.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+
                 DatePickerDialog datePickerDialog = new DatePickerDialog(AddTaskPopup.this,android.R.style.Theme_Holo_Dialog_MinWidth,
                         new DatePickerDialog.OnDateSetListener() {
 
@@ -75,27 +87,12 @@ public class AddTaskPopup extends Activity {
                             }
                         }, year, month, day);
                 datePickerDialog.show();
-                /*
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
-                Intent get_date = new Intent(AddTaskPopup.this, GetDatePopup.class);
-                get_date.putExtra("current_year",year);
-                get_date.putExtra("current_month",month);
-                get_date.putExtra("current_day",day);
-                startActivityForResult(get_date,1);
-
-                 */
             }
         });
 
         time_input.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar c = Calendar.getInstance();
-                int hour = c.get(Calendar.HOUR_OF_DAY);
-                int minute = c.get(Calendar.MINUTE);
 
                 // Launch Time Picker Dialog
 
@@ -147,42 +144,6 @@ public class AddTaskPopup extends Activity {
         });
     }
     private void programming(){
-/*
-        String fulldate = date_input.getText().toString();
-        int day = Integer.parseInt(fulldate.substring(0,1));
-        int month = Integer.parseInt(fulldate.substring(2));
-        List<Integer> date_list = new ArrayList<>();
-        date_list.add(day);
-        date_list.add(month);
-
-
-
-        String fulltime = time_input.getText().toString();
-        //Fix the Time splitter
-        int hour = Integer.parseInt(fulltime.substring(0,1));
-        int min = Integer.parseInt(fulltime.substring(2));
-        time.add(hour);
-        time.add(min);
-        List<Integer> time_list = new ArrayList<>();
-        time_list.add(hour);
-        time_list.add(min);
-
-
-        List<Integer> date_list = new ArrayList<>();
-        List<Integer> time_list = new ArrayList<>();
-
-        date_list.add(123);
-        date_list.add(123);
-        time_list.add(123);
-        time_list.add(123);
-        //Data_Programming newtask = new Data_Programming("Programming",-1,task_input.getText().toString(),time_list,date_list,false,false,project_name_input.getText().toString());
-        Data_Programming newtask = new Data_Programming("Programming",-1,"test",time_list,date_list,false,false,project_name_input.getText().toString());
-        //ArrayList<Data_Programming> retask = new ArrayList<>();
-        //retask.add(newtask);
-
-        result.putExtra("newtask", (Serializable) newtask);
-
- */
         Intent result = new Intent();
         result.putExtra("type","Programming");
 
@@ -195,12 +156,17 @@ public class AddTaskPopup extends Activity {
         result.putExtra("date", date);
 
         String time = time_input.getText().toString();
-        if (time.length() < 1){ time = "00:00"; }
+        if (time.length() < 1){ time = "99:99"; }
         result.putExtra("time", time);
 
         String project_name = project_name_input.getText().toString();
         if (project_name.length() < 1){ project_name = "no_name"; }
         result.putExtra("project_name", project_name);
+
+
+        result.putExtra("creation_date", creation_date);
+        result.putExtra("creation_time", creation_time);
+
 
         setResult(RESULT_OK, result);
 

@@ -39,8 +39,8 @@ public class ListAdapter_Programming extends ArrayAdapter<Data_Programming>  {
         LinearLayout background = (LinearLayout) convertView.findViewById(R.id.background);
         TextView task = (TextView) convertView.findViewById(R.id.task);
         TextView projekt_title = (TextView) convertView.findViewById(R.id.project_title);
-        EditText deadline_date = (EditText) convertView.findViewById(R.id.deadline_date);
-        EditText deadline_time = (EditText) convertView.findViewById(R.id.deadline_time);
+        TextView deadline_date = (TextView) convertView.findViewById(R.id.deadline_date);
+        TextView deadline_time = (TextView) convertView.findViewById(R.id.deadline_time);
         Switch today = (Switch) convertView.findViewById(R.id.today);
 
 
