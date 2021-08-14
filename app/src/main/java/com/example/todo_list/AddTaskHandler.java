@@ -17,6 +17,8 @@ public class AddTaskHandler {
     give Task to new Class SQL
     give Task to Specific Fragment
     Test the edit
+    Test from the Tablet
+    
 
 
         Get objects of Fragments als Function parameter
