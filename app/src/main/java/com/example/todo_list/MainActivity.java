@@ -68,26 +68,35 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 highestID++;
                 Programming programming = PagerAdapter.getProgramming();
+
+                //Create deadline List
                 List<Integer> deadline = new ArrayList<>();
-                //time.add(1233);
-                //time.add(1133);
+
                 String[] time = data.getStringExtra("time").split(":");
                 Log.println(Log.DEBUG,"time", time[0]);
                 deadline.add(Integer.parseInt(time[0]));
                 deadline.add(Integer.parseInt(time[1]));
-
 
                 String[] date = data.getStringExtra("date").split("/");
                 Log.println(Log.DEBUG,"time", date[1]);
                 deadline.add(Integer.parseInt(date[0]));
                 deadline.add(Integer.parseInt(date[1]));
                 deadline.add(Integer.parseInt(date[2]));
-                //deadline.add(Integer.parseInt(data.getStringExtra("date")));
-                //deadline.add(Integer.parseInt(data.getStringExtra("time")));
+
+                //Create creation List
+                List<Integer> creaton = new ArrayList<>();
+                String[] creation_time = data.getStringExtra("creation_time").split(":");
+                creaton.add(Integer.parseInt(creation_time[0]));
+                creaton.add(Integer.parseInt(creation_time[1]));
+
+                String[] creation_date = data.getStringExtra("creation_date").split("/");
+                creaton.add(Integer.parseInt(creation_time[0]));
+                creaton.add(Integer.parseInt(creation_time[1]));
+                creaton.add(Integer.parseInt(creation_time[2]));
 
                 Toast.makeText(this,data.getStringExtra("date"), Toast.LENGTH_LONG).show();
                 programming.addtask(highestID,data.getStringExtra("task"),deadline,data.getStringExtra("project_name"));
-                addTaskHandler.add_task(data.getStringExtra("type"),highestID,data.getStringExtra("task"),deadline,data.getStringExtra("project_name"));
+                addTaskHandler.add_task(data.getStringExtra("type"),highestID,data.getStringExtra("task"),deadline,creaton,data.getStringExtra("project_name"));
 
             }
         }
