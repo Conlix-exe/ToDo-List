@@ -45,7 +45,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Date"
-                android:inputType="number" />
+                android:inputType="number"
+                android:focusable="false" />
 
             <EditText
                 android:id="@+id/time_input"
@@ -54,7 +55,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Time"
-                android:inputType="number" />
+                android:inputType="number"
+                android:focusable="false"/>
         </LinearLayout>
 
         <LinearLayout

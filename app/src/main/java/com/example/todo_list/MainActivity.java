@@ -90,9 +90,9 @@ public class MainActivity extends AppCompatActivity {
                 creaton.add(Integer.parseInt(creation_time[1]));
 
                 String[] creation_date = data.getStringExtra("creation_date").split("/");
-                creaton.add(Integer.parseInt(creation_time[0]));
-                creaton.add(Integer.parseInt(creation_time[1]));
-                //creaton.add(Integer.parseInt(creation_time[2]));
+                creaton.add(Integer.parseInt(creation_date[0]));
+                creaton.add(Integer.parseInt(creation_date[1]));
+                creaton.add(Integer.parseInt(creation_date[2]));
 
                 Toast.makeText(this,data.getStringExtra("date"), Toast.LENGTH_LONG).show();
                 programming.addtask(highestID,data.getStringExtra("task"),deadline,data.getStringExtra("project_name"));

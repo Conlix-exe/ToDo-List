@@ -53,6 +53,9 @@ public class AddTaskPopup extends Activity {
         date_input = findViewById(R.id.date_input);
         time_input = findViewById(R.id.time_input);
 
+        date_input.setKeyListener(null);
+
+
         abort = findViewById(R.id.abort);
         add = findViewById(R.id.add);
 
