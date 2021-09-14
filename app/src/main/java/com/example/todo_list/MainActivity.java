@@ -10,8 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.todo_list.database.DatabaseHelper;
 import com.example.todo_list.fragments.Programming;
 import com.example.todo_list.popups.AddTaskPopup;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -24,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabbar;
     FloatingActionButton addtask;
     PagerAdapter pagerAdapter;
-    AddTaskHandler addTaskHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
         TabItem programming = findViewById(R.id.programming);
         addtask = findViewById(R.id.addtask);
 
-        //create AddTaskHandler
-        addTaskHandler = new AddTaskHandler(this);
 
         //TabItems...
         final ViewPager viewPager = findViewById(R.id.viewPager);
@@ -96,10 +95,11 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(this,data.getStringExtra("date"), Toast.LENGTH_LONG).show();
                 programming.addtask(highestID,data.getStringExtra("task"),deadline,data.getStringExtra("project_name"));
-                addTaskHandler.add_task(data.getStringExtra("type"),highestID,data.getStringExtra("task"),deadline,creaton,data.getStringExtra("project_name"));
-
+                boolean saved = DatabaseHelper.addData(data.getStringExtra("type"), highestID, data.getStringExtra("task"), deadline, creaton, false, false, data.getStringExtra("project_name"));
+                if (!saved){
+                    Toast.makeText(this, "Saving Failed", Toast.LENGTH_LONG).show();
+                }
             }
         }
     }
-    //AddTaskHandler einbinden & Fragments übergeben
 }
