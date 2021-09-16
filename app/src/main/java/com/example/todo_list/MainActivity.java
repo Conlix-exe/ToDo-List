@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         //Load Stored Data
         List<Data_Programming> stored_data = new ArrayList<>();
         stored_data = databaseHelper.getData_Programming();
+        highestID= stored_data.get(stored_data.size()-1).getId();
         fragment_programming.addTask(stored_data);
 
     }//Implement List Adapter
@@ -106,11 +107,12 @@ public class MainActivity extends AppCompatActivity {
                 creaton.add(Integer.parseInt(creation_date[2]));
 
                 Toast.makeText(this,data.getStringExtra("date"), Toast.LENGTH_LONG).show();
+                Log.d("DEBUG", String.valueOf(highestID));
                 fragment_programming.addtask(highestID,data.getStringExtra("task"),deadline,data.getStringExtra("project_name"));
                 boolean saved;
                 saved = databaseHelper.addData(data.getStringExtra("type"), highestID, data.getStringExtra("task"), deadline, creaton, false, false, data.getStringExtra("project_name"));
                 if (!saved){
-                    Toast.makeText(this, "Saving Failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, String.valueOf(highestID), Toast.LENGTH_LONG).show();
                 }
             }
         }
