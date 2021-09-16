@@ -5,7 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.example.todo_list.MainActivity;
 import com.example.todo_list.data_types.Data_Programming;
 
 import java.util.ArrayList;
@@ -47,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String createTable = "create table " + TABLE_NAME + " (" + ID + " INTEGER PRIMARY KEY, " + TYPE + " TEXT, " + TASK + " TEXT, " +
                 DEADLINE1 + " INTEGER, " + DEADLINE2 + " INTEGER, " + DEADLINE3 + " INTEGER, " + DEADLINE4 + " INTEGER, " + DEADLINE5 + " INTEGER, " +
                 CREATIONTIME1 + " INTEGER, " + CREATIONTIME2 + " INTEGER, " + CREATIONTIME3 + " INTEGER, " + CREATIONTIME4 + " INTEGER, " + CREATIONTIME5 + " INTEGER, " +
-                TODAY + " BOOLEAN, " + CHECKED + " BOOLEAN," + TOPIC + " TEXT)";
+                TODAY + " INTEGER, " + CHECKED + " INTEGER," + TOPIC + " TEXT)";
         db.execSQL(createTable);
     }
 
@@ -100,12 +103,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = sqLiteDatabase.rawQuery("select * from "+TABLE_NAME,null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
+            Log.d("DEBUG","Start");
             List<Integer> deadline = new ArrayList<>();
             deadline.add(cursor.getInt(3));
             deadline.add(cursor.getInt(4));
             deadline.add(cursor.getInt(5));
             deadline.add(cursor.getInt(6));
             deadline.add(cursor.getInt(7));
+            Log.d("DEBUG","Mid");
 
             List<Integer> creaton = new ArrayList<>();
             creaton.add(cursor.getInt(8));
@@ -113,6 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             creaton.add(cursor.getInt(10));
             creaton.add(cursor.getInt(11));
             creaton.add(cursor.getInt(12));
+            Log.d("DEBUG","End");
 
             //Read Int as Boolean
             boolean today = false;
@@ -127,6 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
             return_Data.add(new Data_Programming(cursor.getString(1),cursor.getInt(0),cursor.getString(2),deadline,creaton,today,checked,cursor.getString(15)));
+            cursor.moveToNext();
         }
         cursor.close();
         sqLiteDatabase.close();
