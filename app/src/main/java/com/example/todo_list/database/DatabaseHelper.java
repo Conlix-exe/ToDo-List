@@ -2,9 +2,13 @@ package com.example.todo_list.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.todo_list.data_types.Data_Programming;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -19,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TYPE = "TYPE";
     public static final String ID = "ID";
     public static final String TASK = "TASK";
+    public static final String TOPIC = "TOPIC";
     public static final String DEADLINE1 = "DEADLINE1";
     public static final String DEADLINE2 = "DEADLINE2";
     public static final String DEADLINE3 = "DEADLINE3";
@@ -32,8 +37,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TODAY = "TODAY";
     public static final String CHECKED = "CHECKED";
 
-    DatabaseHelper(Context context){
+    public DatabaseHelper(Context context){
         super(context,DATABASE_NAME,null,1);
+        //context.deleteDatabase(DATABASE_NAME); //Delete Database when starting
     }
 
     @Override
@@ -41,7 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String createTable = "create table " + TABLE_NAME + " (" + ID + " INTEGER PRIMARY KEY, " + TYPE + " TEXT, " + TASK + " TEXT, " +
                 DEADLINE1 + " INTEGER, " + DEADLINE2 + " INTEGER, " + DEADLINE3 + " INTEGER, " + DEADLINE4 + " INTEGER, " + DEADLINE5 + " INTEGER, " +
                 CREATIONTIME1 + " INTEGER, " + CREATIONTIME2 + " INTEGER, " + CREATIONTIME3 + " INTEGER, " + CREATIONTIME4 + " INTEGER, " + CREATIONTIME5 + " INTEGER, " +
-                TODAY + " BOOLEAN, " + CHECKED + " BOOLEAN)";
+                TODAY + " BOOLEAN, " + CHECKED + " BOOLEAN," + TOPIC + " TEXT)";
         db.execSQL(createTable);
     }
 
@@ -67,8 +73,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(CREATIONTIME3,creation.get(2));
         contentValues.put(CREATIONTIME4,creation.get(3));
         contentValues.put(CREATIONTIME5,creation.get(4));
-        contentValues.put(TODAY,today);
-        contentValues.put(CHECKED,checked);
+        contentValues.put(TOPIC,projekt_name);
+
+        //Save Boolean as Int (0 = False & 1 = True)
+        int today_int = 0;
+        if (today){ today_int = 1; }
+
+        int checked_int = 0;
+        if (checked){ checked_int = 1; }
+
+        contentValues.put(TODAY,today_int);
+        contentValues.put(CHECKED,checked_int);
 
         long insert = sqLiteDatabase.insert(TABLE_NAME,null,contentValues);
         if (insert == -1){
@@ -77,4 +92,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+    public List<Data_Programming> getData_Programming(){
+        List<Data_Programming> return_Data = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("select * from "+TABLE_NAME,null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            List<Integer> deadline = new ArrayList<>();
+            deadline.add(cursor.getInt(3));
+            deadline.add(cursor.getInt(4));
+            deadline.add(cursor.getInt(5));
+            deadline.add(cursor.getInt(6));
+            deadline.add(cursor.getInt(7));
+
+            List<Integer> creaton = new ArrayList<>();
+            creaton.add(cursor.getInt(8));
+            creaton.add(cursor.getInt(9));
+            creaton.add(cursor.getInt(10));
+            creaton.add(cursor.getInt(11));
+            creaton.add(cursor.getInt(12));
+
+            //Read Int as Boolean
+            boolean today = false;
+            if (cursor.getInt(13) == 1){
+                today = true;
+            }
+
+            boolean checked = false;
+            if (cursor.getInt(14) == 1){
+                checked = true;
+            }
+
+
+            return_Data.add(new Data_Programming(cursor.getString(1),cursor.getInt(0),cursor.getString(2),deadline,creaton,today,checked,cursor.getString(15)));
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return return_Data;
+    }
+
+    //Del function
 }

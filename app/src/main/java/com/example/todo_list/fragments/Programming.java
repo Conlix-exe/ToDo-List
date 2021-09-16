@@ -88,7 +88,13 @@ public class Programming extends Fragment {
         arrayList.add(newtask);
 
 
-        Toast.makeText(mcontext,date.getDate()+"", Toast.LENGTH_LONG).show();
+        //Toast.makeText(mcontext,date.getDate()+"", Toast.LENGTH_LONG).show();
         //arrayList.add(new Data_Programming("test",1,"Task",test,test,false,false,"Project"));
+    }
+    public void addTask(List<Data_Programming> Data){
+        for(int i = 0; i < Data.size(); i++){
+            arrayList.add(Data.get(i));
+        }
+
     }
 }

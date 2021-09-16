@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.todo_list.data_types.Data_Programming;
 import com.example.todo_list.database.DatabaseHelper;
 import com.example.todo_list.fragments.Programming;
 import com.example.todo_list.popups.AddTaskPopup;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabbar;
     FloatingActionButton addtask;
     PagerAdapter pagerAdapter;
+    DatabaseHelper databaseHelper;
+    Programming fragment_programming;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         TabItem programming = findViewById(R.id.programming);
         addtask = findViewById(R.id.addtask);
 
+        databaseHelper = new DatabaseHelper(this);
 
         //TabItems...
         final ViewPager viewPager = findViewById(R.id.viewPager);
@@ -58,6 +62,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        fragment_programming = PagerAdapter.getProgramming();
+
+        //Load Stored Data
+        List<Data_Programming> stored_data = new ArrayList<>();
+        stored_data = databaseHelper.getData_Programming();
+        fragment_programming.addTask(stored_data);
+
     }//Implement List Adapter
 
     @Override
@@ -66,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1){
             if(resultCode == RESULT_OK){
                 highestID++;
-                Programming programming = PagerAdapter.getProgramming();
+
 
                 //Create deadline List
                 List<Integer> deadline = new ArrayList<>();
@@ -94,8 +106,9 @@ public class MainActivity extends AppCompatActivity {
                 creaton.add(Integer.parseInt(creation_date[2]));
 
                 Toast.makeText(this,data.getStringExtra("date"), Toast.LENGTH_LONG).show();
-                programming.addtask(highestID,data.getStringExtra("task"),deadline,data.getStringExtra("project_name"));
-                boolean saved = DatabaseHelper.addData(data.getStringExtra("type"), highestID, data.getStringExtra("task"), deadline, creaton, false, false, data.getStringExtra("project_name"));
+                fragment_programming.addtask(highestID,data.getStringExtra("task"),deadline,data.getStringExtra("project_name"));
+                boolean saved;
+                saved = databaseHelper.addData(data.getStringExtra("type"), highestID, data.getStringExtra("task"), deadline, creaton, false, false, data.getStringExtra("project_name"));
                 if (!saved){
                     Toast.makeText(this, "Saving Failed", Toast.LENGTH_LONG).show();
                 }
