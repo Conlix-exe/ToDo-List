@@ -3,9 +3,11 @@ package com.example.todo_list.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -14,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.todo_list.ListAdapters.ListAdapter_Programming;
 import com.example.todo_list.R;
 import com.example.todo_list.data_types.Data_Programming;
+import com.example.todo_list.database.DatabaseHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -38,10 +41,12 @@ public class Programming extends Fragment {
     ArrayList<Data_Programming> arrayList = new ArrayList<>();
     List<Integer> test = new ArrayList<>();
     ListAdapter_Programming adapter;
+    DatabaseHelper this_databaseHelper;
 
-    public Programming(Context mcontext) {
+    public Programming(Context mcontext, DatabaseHelper databaseHelper) {
         // Sets Context to MainActivity.this
         //mylist.add("Test");
+        this_databaseHelper = databaseHelper;
         test.add(123);
         test.add(123);
         test.add(123);
@@ -62,6 +67,18 @@ public class Programming extends Fragment {
         //lv.setAdapter(arrayAdapter);
         adapter = new ListAdapter_Programming(mcontext, R.layout.row_programming,arrayList);
         lv.setAdapter(adapter);
+/*
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("DEBUG","Debug");
+                Data_Programming data = arrayList.get(position);
+                boolean check = this_databaseHelper.delItem(data); //Change delItem to void when unused
+                arrayList.remove(data);
+            }
+        });
+ */
 
         return view;
     }
