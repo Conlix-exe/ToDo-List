@@ -141,4 +141,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Del function
+    public boolean delItem(Data_Programming del_data){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + TABLE_NAME + " WHERE " + ID + " = " + del_data.getId();
+        Cursor cursor = db.rawQuery(queryString,null);
+        if (cursor.moveToFirst()){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
