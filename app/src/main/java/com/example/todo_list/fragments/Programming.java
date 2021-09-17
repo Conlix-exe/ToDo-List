@@ -38,7 +38,7 @@ public class Programming extends Fragment {
     private ListView lv;
     Context mcontext;
     //ArrayList<String> mylist = new ArrayList<>();
-    ArrayList<Data_Programming> arrayList = new ArrayList<>();
+    public ArrayList<Data_Programming> arrayList = new ArrayList<>();
     List<Integer> test = new ArrayList<>();
     ListAdapter_Programming adapter;
     DatabaseHelper this_databaseHelper;
@@ -67,18 +67,6 @@ public class Programming extends Fragment {
         //lv.setAdapter(arrayAdapter);
         adapter = new ListAdapter_Programming(mcontext, R.layout.row_programming,arrayList);
         lv.setAdapter(adapter);
-/*
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("DEBUG","Debug");
-                Data_Programming data = arrayList.get(position);
-                boolean check = this_databaseHelper.delItem(data); //Change delItem to void when unused
-                arrayList.remove(data);
-            }
-        });
- */
 
         return view;
     }
@@ -112,6 +100,9 @@ public class Programming extends Fragment {
         for(int i = 0; i < Data.size(); i++){
             arrayList.add(Data.get(i));
         }
+    }
 
+    public void delete_Task(Data_Programming del_Data){
+        this.arrayList.remove(del_Data);
     }
 }
