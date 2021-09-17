@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import com.example.todo_list.R;
 import com.example.todo_list.data_types.Data_Programming;
 import com.example.todo_list.database.DatabaseHelper;
+import com.example.todo_list.fragments.Programming;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +25,13 @@ import java.util.List;
 public class ListAdapter_Programming extends ArrayAdapter<Data_Programming>  {
     private Context rcontext;
     private int rresouce;
+    private List<Data_Programming> robjects;
 
     public ListAdapter_Programming(@NonNull Context context, int resource, @NonNull List<Data_Programming> objects) {
         super(context, resource, (List<Data_Programming>) objects);
         this.rcontext = context;
         this.rresouce = resource;
+        this.robjects = objects;
     }
 
     @NonNull
@@ -72,6 +75,8 @@ public class ListAdapter_Programming extends ArrayAdapter<Data_Programming>  {
 
     private void del_item(int position){
         //Del the Task from List and Database
-        DatabaseHelper databaseHelper =
+        DatabaseHelper databaseHelper = new DatabaseHelper(rcontext);
+        databaseHelper.delItem(robjects.get(position));
+        //Delete Task from arrayList in Programming
     }
 }
