@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 
 import com.example.todo_list.R;
 import com.example.todo_list.data_types.Data_Programming;
+import com.example.todo_list.database.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class ListAdapter_Programming extends ArrayAdapter<Data_Programming>  {
         TextView deadline_date = (TextView) convertView.findViewById(R.id.deadline_date);
         TextView deadline_time = (TextView) convertView.findViewById(R.id.deadline_time);
         Switch today = (Switch) convertView.findViewById(R.id.today);
-
+        LinearLayout deadline_layout = (LinearLayout) convertView.findViewById(R.id.deadline_layout);
 
         projekt_title.setText(getItem(position).getProjectname());
         task.setText(getItem(position).getTask());
@@ -53,7 +54,24 @@ public class ListAdapter_Programming extends ArrayAdapter<Data_Programming>  {
         deadline_time.setText(day.get(2)+"."+day.get(3)+"."+day.get(4));
         today.setChecked(getItem(position).isToday());
 
+        deadline_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                del_item(position);
+            }
+        });
+        deadline_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                del_item(position);
+            }
+        });
 
         return convertView;
+    }
+
+    private void del_item(int position){
+        //Del the Task from List and Database
+        DatabaseHelper databaseHelper =
     }
 }
