@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         //TabItems...
         final ViewPager viewPager = findViewById(R.id.viewPager);
-        pagerAdapter = new PagerAdapter(getSupportFragmentManager(),this);
+        pagerAdapter = new PagerAdapter(getSupportFragmentManager(),databaseHelper,this);
         viewPager.setAdapter(pagerAdapter);
         tabbar.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(2);
