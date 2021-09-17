@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.example.todo_list.database.DatabaseHelper;
 import com.example.todo_list.fragments.Home;
 import com.example.todo_list.fragments.Main;
 import com.example.todo_list.fragments.Programming;
@@ -21,10 +22,10 @@ public class PagerAdapter extends FragmentPagerAdapter {
     static Programming programming;
     Home home;
     int curent_position = -1;
-    public PagerAdapter(FragmentManager fm, Context mcontext){
+    public PagerAdapter(FragmentManager fm, DatabaseHelper databaseHelper, Context mcontext){
         super(fm);
         this.mcontext = mcontext;
-        programming = new Programming(mcontext);
+        programming = new Programming(mcontext,databaseHelper);
         home = new Home();
 
     }
