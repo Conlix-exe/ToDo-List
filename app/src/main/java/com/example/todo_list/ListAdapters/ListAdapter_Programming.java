@@ -34,6 +34,7 @@ public class ListAdapter_Programming extends ArrayAdapter<Data_Programming>  {
         this.robjects = objects;
     }
 
+
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -78,5 +79,6 @@ public class ListAdapter_Programming extends ArrayAdapter<Data_Programming>  {
         DatabaseHelper databaseHelper = new DatabaseHelper(rcontext);
         databaseHelper.delItem(robjects.get(position));
         //Delete Task from arrayList in Programming
+        robjects.remove(position);
     }
 }
